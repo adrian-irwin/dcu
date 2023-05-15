@@ -1,0 +1,33 @@
+{% extends 'base.html' %}
+
+{% block title %}Order History{% endblock %}
+
+{% block content %}
+<table class="table table-striped p-2">
+    <thead>
+        <tr>
+            <th>Order ID</th>
+            <th>Ordered On</th>
+            <th>Shipping to</th>
+            <th>Total price</th>
+        </tr>
+    </thead>
+    <tbody>
+
+        {% for ord in orders %}
+            <tr>
+                <td>{{ ord.id }}</td>
+                <td>{{ ord.date_ordered }}</td>
+                <td>{{ ord.shipping_address|title }}</td>
+                <td>€{{ ord.total_price }}</td>
+            </tr>
+        {% endfor %}
+
+        <tfoot>
+            <td>Total Orders: {{ order_count }}</td>
+            <td colspan="2"></td>
+            <td>€{{ total_order_price|floatformat:2 }}</td>
+        </tfoot>
+    </tbody>
+</table>
+{% endblock %}

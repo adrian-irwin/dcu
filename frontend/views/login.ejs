@@ -1,0 +1,70 @@
+<%- include('header', {title : 'Login'}) -%>
+
+    <div class="container-lg p-3">
+
+        <h1 class="text-center pb-4">Login</h1>
+
+        <form id="login-form">
+            <div class="mb-4 form-floating">
+                <input type="text" class="form-control form-control-lg" name="username-input" id="username" placeholder="Your username" required autofocus>
+                <label for="username-input" class="form-label">Username</label>
+            </div>
+
+            <div class="mb-4 form-floating">
+                <input type="password" class="form-control form-control-lg" name="password-input" id="password" placeholder="Your password" required>
+                <label for="password-input" class="form-label">Password</label>
+            </div>
+
+            <button class="btn btn-lg btn-primary mb-5" type="submit">Login</button>
+        </form>
+
+    </div>
+
+    <script>
+        function formValidate(event) {
+            event.preventDefault();
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            if (username == "") {
+                alert("Username cannot be empty.")
+            }
+            else if (password == "") {
+                alert("Password cannot be empty.")
+            }
+            else {
+                fetch("http://127.0.0.1:8000/api/token/", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "username": username,
+                        "password": password
+                    })
+                }).then(response => response.json())
+                .then(data => {
+                    console.log(data)
+                    if ("access" in data && "refresh" in data) {
+                        console.log("Access token is " + data.access);
+                        let accessToken = data["access"];
+                        let refreshToken = data["refresh"];
+                        localStorage.setItem("access", accessToken);
+                        localStorage.setItem("refresh", refreshToken);
+                        localStorage.setItem("username", username);
+                        window.location.href = "/";
+                    }
+                    else {
+                        alert("Username or Password invalid.")
+                    }
+                })
+            }
+        }
+
+        let loginForm = document.getElementById("login-form");
+        loginForm.addEventListener("submit", formValidate);
+
+    </script>
+
+<%- include('footer') -%>

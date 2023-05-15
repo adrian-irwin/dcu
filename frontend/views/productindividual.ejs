@@ -1,0 +1,106 @@
+<%- include('header') -%>
+
+<div id="main" class="container-lg p-3 text-center">
+</div>
+
+<script>
+
+    let mainDiv = document.getElementById("main");
+    let title = document.createElement("h1");
+    let image = document.createElement("img");
+    let desc = document.createElement("p");
+    let price = document.createElement("p");
+    let outerAddToCart = document.createElement("div");
+    let addToCartButton = document.createElement("button");
+    let accessToken = localStorage.getItem("access");
+
+    title.className = "text-center";
+
+    let productID = (new URLSearchParams(window.location.search)).get("id");
+
+    if (productID == null || productID == "") {
+        window.location.href = "/";
+    }
+    else {
+        let url = "http://127.0.0.1:8000/api/products/" + productID + "/"
+        console.log("API url for product: " + url)
+        fetch(url)
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+
+            if ("detail" in data) {
+                console.log("Error: " + data.detail);
+                window.location.href = "/";
+            }
+            else {
+                let productName = data["name"];
+                title.innerHTML = productName;
+
+                desc.innerHTML = data["description"];
+
+                price.innerHTML = "€ " + data["price"];
+
+                image.src = data["product_image"];
+                image.alt = data["description"];
+                image.style.maxWidth = "300px";
+                image.style.height = "auto";
+
+
+                outerAddToCart.className = "text-center";
+                outerAddToCart.style.maxWidth = "500px";
+                outerAddToCart.style.margin = "auto";
+
+                addToCartButton.className = "btn btn-success";
+                addToCartButton.innerHTML = "Add to cart";
+                addToCartButton.onclick = function() {
+                    if (accessToken != "" && accessToken != null) {
+                        fetch("http://127.0.0.1:8000/apiadd/", {
+                            method: "POST",
+                            headers: {
+                                "Accept": "application/json",
+                                "Content-Type": "application/json",
+                                "Authorization": "Bearer " + accessToken
+                            },
+                            body: JSON.stringify({
+                                "product_id": parseInt(productID)
+                            })
+                        })
+                        .then(response => response.json())
+                        .then(data => {
+                            console.log(data)
+                            let added = document.createElement("div");
+                            added.className = "alert alert-success mt-2";
+                            added.innerHTML = productName + " added to cart!";
+                            outerAddToCart.appendChild(added);
+
+                            setTimeout(function() {
+                                outerAddToCart.removeChild(added);
+                            }, 1500);
+
+                            console.log(productName + " added to cart!");
+                        })
+                    }
+                    else if (document.getElementById("notLoggedIn") == null){
+                        let notLoggedIn = document.createElement("div");
+                        notLoggedIn.id = "notLoggedIn";
+                        notLoggedIn.className = "alert alert-danger mt-3";
+                        notLoggedIn.innerHTML = "You need to be logged in to add an item to your basket!<br><br><a href='/login' class='alert-link'>Click here to login.</a>";
+                        outerAddToCart.appendChild(notLoggedIn);
+                    }
+                }
+
+                outerAddToCart.appendChild(addToCartButton);
+
+                mainDiv.appendChild(title);
+                mainDiv.appendChild(image);
+                mainDiv.appendChild(desc);
+                mainDiv.appendChild(price);
+                mainDiv.appendChild(outerAddToCart);
+            }
+
+        })
+    }
+</script>
+
+<%- include('footer') -%>

@@ -1,0 +1,26 @@
+{% extends 'base.html' %}
+
+{% block title %}Clothes Shop{% endblock  %}
+
+{% block content %}
+
+<div class="text-center">
+    {% if user.is_authenticated %}
+    <p class="h2">Hello {{ user }}.</p>
+    <p class="h2">Welcome back to generic Clothes Shop.</p>
+    <a href="{% url 'all_products' %}" class="btn btn-primary btn-lg m-3">All Products</a>
+    <br>
+    <a href="{% url 'show_basket' %}" class="btn btn-primary btn-lg m-3">Shopping Basket</a>
+    <br>
+    <a href="{% url 'order_history' %}" class="btn btn-primary btn-lg m-3">Order History</a>
+    {% else %}
+    <p class="h2">Welcome to a generic Clothes Shop.</p>
+    <a href="{% url 'all_products' %}" class="btn btn-primary btn-lg m-3">All Products</a>
+    <br>
+    <a href="{% url 'register' %}" class="btn btn-primary btn-lg m-3">Register</a>
+    <a href="{% url 'login' %}" class="btn btn-primary btn-lg m-3">Login</a>
+    {% endif %}
+
+</div>
+
+{% endblock  %}

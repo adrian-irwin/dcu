@@ -1,0 +1,46 @@
+{% extends 'base.html' %}
+
+
+{% block title %}Shopping Basket{% endblock %}
+
+{% block content %}
+
+{% if empty %}
+<h1 class="text-center p-5">Your shopping basket is empty.</h1>
+{% else %}
+<table class="table table-striped align-middle">
+    <thead>
+        <tr>
+            <th scope="col">Name</th>
+            <th scope="col">Description</th>
+            <th scope="col">Image</th>
+            <th scope="col">Quantity</th>
+            <th scope="col">Price</th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for item in sbi %}
+        <tr onclick="location.href='/products/{{item.product_id.id}}';" style="cursor: pointer;">
+            <th scope="row">{{ item.product_id.name }}</th>
+            <td>{{ item.product_id.description }}</td>
+            <td><img src="{{item.product_id.product_image.url}}" style="width: 100px;"/></td>
+            <td>{{ item.quantity }}</td>
+            <td>€{{ item.item_price }}</td>
+            <td><a href="{% url 'remove_item' item.id %}" class="btn btn-danger">Remove</a></td>
+        </tr>
+        {% endfor %}
+        <tfoot>
+            <tr>
+                <th colspan="3">Total</th>
+                <td >{{ total_quantity }} items</td>
+                <td colspan="2">€{{ total|floatformat:2 }}</td>
+            </tr>
+            <tr>
+                <td colspan="6" class="text-center"><a href="{% url 'order' %}" class="btn btn-primary btn-lg">Order</a></td>
+            </tr>
+        </tfoot>
+    </tbody>
+</table>
+{% endif %}
+
+{% endblock %}

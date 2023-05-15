@@ -1,0 +1,131 @@
+<%- include('header', {title : 'Checkout'}) -%>
+
+
+
+<%- include('basketItems') -%>
+
+<script>
+
+
+    function formOrder(event) {
+        event.preventDefault();
+        let address = document.getElementById("address").value;
+
+        if (address == "") {
+            alert("Please enter a shipping address");
+        }
+        else {
+            fetch("http://127.0.0.1:8000/api/basket/" ,{
+                method: "GET",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + accessToken
+                    }
+            }).then(response => response.json())
+            .then(data => {
+                console.log(data[0]["id"]);
+                let basketId = data[0]["id"];
+                console.log(basketId);
+
+                fetch("http://127.0.0.1:8000/apicheckout/", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json",
+                        "Authorization": "Bearer " + accessToken
+                    },
+                    body: JSON.stringify({
+                        "basket_id": basketId,
+                        "shipping_address": address
+                    })
+                })
+                .then(response => response.json())
+                .then(data => {
+                    console.log(data);
+                    let orderMade = document.createElement("h1");
+                    let formDiv = document.getElementById("form-div");
+                    orderMade.className = "order-made";
+                    orderMade.innerHTML = "Order made!" + "<br>You will be redirected to the Order History page in 5 seconds.";
+                    orderMade.style.textAlign = "center";
+                    formDiv.appendChild(orderMade);
+                    setTimeout(() => {
+                        window.location.href = "/order";
+                    }, 5000);
+                })
+
+            })
+
+        }
+    }
+
+    getBasket();
+
+
+    function formCreate() {
+        let formOuter = document.createElement("div");
+        let form = document.createElement("form");
+        let address = document.createElement("div");
+        let addressInput = document.createElement("input");
+        let addressLabel = document.createElement("label");
+        let submit = document.createElement("button");
+
+        formOuter.className = "container-lg p-3 text-center";
+        formOuter.id = "form-div";
+
+        form.id = "order-form";
+
+        address.className = "mb-4 form-floating";
+
+        addressInput.type = "text";
+        addressInput.className = "form-control form-control-lg";
+        addressInput.name = "address-input";
+        addressInput.id = "address";
+        addressInput.placeholder = "Your Shipping Address";
+        addressInput.required = true;
+        addressInput.autofocus = true;
+
+        addressLabel.for = "address-input";
+        addressLabel.className = "form-label";
+        addressLabel.innerHTML = "Shipping Address";
+        submit.type = "submit";
+        submit.className = "btn btn-lg btn-success mb-5";
+        submit.id = "order-button";
+        submit.innerHTML = "Order";
+
+        address.appendChild(addressInput);
+        address.appendChild(addressLabel);
+        form.appendChild(address);
+        form.appendChild(submit);
+        formOuter.appendChild(form);
+        document.body.appendChild(formOuter);
+    }
+
+
+    function checkBasket() {
+        fetch("http://127.0.0.1:8000/api/basket/", {
+            method: "GET",
+            headers: {
+                "Accept": "application/json",
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken
+            }
+        })
+        .then(response => response.json())
+        .then(data => {
+            console.log(data);
+            if (data[0]["items"].length == 0) {
+                document.getElementById("form-div").remove();
+            }
+        })
+    }
+
+    formCreate();
+    checkBasket();
+
+    let orderForm = document.getElementById("order-form");
+    orderForm.addEventListener("submit", formOrder);
+
+</script>
+
+<%- include('footer') -%>

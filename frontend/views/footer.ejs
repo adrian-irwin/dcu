@@ -1,0 +1,62 @@
+    <script>
+
+        window.userLoggedIn = false;
+
+        function logOut() {
+            if (window.userLoggedIn) {
+                localStorage.removeItem("access");
+                localStorage.removeItem("refresh");
+                localStorage.removeItem("username");
+                window.userLoggedIn = false;
+                console.log(window.userLoggedIn)
+                window.location.href = "/";
+            }
+        }
+
+        function logIn() {
+            let accessToken = localStorage.getItem("access");
+            if (accessToken != "" && accessToken != null) {
+                window.userLoggedIn = true;
+            }
+            let loginLink = document.getElementById("auth-link");
+            let basketLink = document.getElementById("auth-basket");
+            let registerLink = document.getElementById("auth-register");
+            let orderHistLink = document.getElementById("auth-order");
+            if (window.userLoggedIn) {
+                loginLink.innerHTML = "Logout";
+                loginLink.href = "#";
+                loginLink.onclick = function() { logOut(); return false; };
+                registerLink.remove();
+            }
+            else {
+                loginLink.innerHTML = "Login";
+                loginLink.href = "/login";
+                basketLink.remove();
+                orderHistLink.remove();
+            }
+        }
+
+        if (location.pathname == "/products") {
+            document.getElementById("all-products").classList.add("active");
+        }
+        else if (location.pathname == "/basket") {
+            document.getElementById("auth-basket").classList.add("active");
+        }
+        else if (location.pathname == "/login") {
+            document.getElementById("auth-link").classList.add("active");
+        }
+        else if (location.pathname == "/register") {
+            document.getElementById("auth-register").classList.add("active");
+        }
+        else if (location.pathname == "/order") {
+            document.getElementById("auth-order").classList.add("active");
+        }
+        console.log(location.pathname);
+
+        logIn();
+
+        console.log(localStorage.getItem("access"))
+    </script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.1.3/dist/js/bootstrap.bundle.min.js" integrity="sha384-ka7Sk0Gln4gmtz2MlQnikT1wXgYsOg+OMhuP+IlRH9sENBO0LRn5q+8nbTov4+1p" crossorigin="anonymous"></script>
+    </body>
+</html>

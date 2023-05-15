@@ -1,0 +1,35 @@
+<%- include('header', {title : 'Basket'}) -%>
+
+<%- include('basketItems') -%>
+
+<script>
+    function addCheckoutButton() {
+        if (accessToken != "" && accessToken != null) {
+            let checkoutButtonRow = document.createElement("tr");
+            let outerCheckoutButton = document.createElement("td");
+            let checkoutButton = document.createElement("a");
+
+            outerCheckoutButton.colSpan = "5";
+            outerCheckoutButton.className = "text-center";
+            checkoutButton.className = "btn btn-lg btn-primary";
+            checkoutButton.innerHTML = "Checkout";
+            checkoutButton.href = "/checkout";
+
+            outerCheckoutButton.appendChild(checkoutButton);
+            checkoutButtonRow.appendChild(outerCheckoutButton);
+
+            let basketFooter = document.getElementById("basket-items-foot");
+            basketFooter.appendChild(checkoutButtonRow);
+        }
+    }
+
+
+    window.onload = function() {
+        getBasket();
+        setTimeout(() => {
+            addCheckoutButton();
+        }, 50);
+    }
+</script>
+
+<%- include('footer') -%>

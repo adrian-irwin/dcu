@@ -1,0 +1,15 @@
+Selected Task: ex4-attendance.c
+
+- In the main function I decided to initialize my 'status' array to automatically have enough memory for all of the given inputs by using dynamic memory allocation so that I wouldn't use more memory than needed.
+
+- If the program is unable to allocate enough memory to the 'status' array then it will print 'Not enough memory!' and exit the program.
+
+- I decided to not store the user's inputs to reduce on the amount of memory that my program would use, instead I only store the status of their attendance which is only one integer compared to an unknown amount of characters.
+
+- Not storing the user input makes the program less likely to fail and crash if the user inputs invalid or data that exceeds memory limits.
+
+- For counting the number of absences, I decided to only scan the user input for the 'A' as this is all that mattered for the code.
+
+- For finding three consecutive lates, I only checked for the string 'LLL' in the user inputs and didn't parse the rest of it to make the program more simple.
+
+- Instead of finding the number of absences and the finding of three consectuive lates in the changeStatus function I put them both into their own functions to make the code easier to read and follow.

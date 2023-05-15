@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="en-gb">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="description" content="Add your meta description" />
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>AIA Technologies</title>
+
+    <link rel="stylesheet" href="styles/style2.css" />
+    <link rel="shortcut icon" href="images/logo.PNG" />
+
+</head>
+<!-- Body Opening Tag-->
+
+<body>
+    <!-- Header -->
+    <section id="header">
+        <div class="header container">
+            <div class="nav-bar">
+
+                <div class="brand">
+                    <a href="#hero">
+                        <h1><span>A</span>IA <span>T</span>echnologies</h1>
+                    </a>
+                </div>
+                <div class="nav-list">
+
+                    <div class="hamburger">
+                        <div class="bar"></div>
+                    </div>
+                    <ul>
+                        <li class="current"><a href="index.html">Home|</a></li>
+                        <li><a href="pricing.html">Pricing|</a></li>
+                        <li><a href="aboutUs.html">About Us|</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </section>
+    <!-- End Header -->
+
+    <!--Main-->
+    <main class="main-style" ;>
+
+        <!-- Home Section  -->
+
+        <section id="hero">
+            <div class="hero container">
+                <div>
+                    <h1>Welcome <span></span></h1>
+                    <h1>To The Official <span></span></h1>
+                    <h1>AIA Technologies <span></span>Website</h1>
+
+                </div>
+            </div>
+        </section>
+        <!-- End Home Section  -->
+
+        <!-- About Me Section -->
+        <section id="about">
+            <div class="about container">
+                <div class="col-left">
+                    <div class="about-img">
+                        <div class="slideshow-container">
+
+                            <div class="mySlides fade">
+                                <div class="numbertext"></div>
+                                <img src="images/bg-ai1.jpg" style="width:100%">
+                                <div class="text"></div>
+                            </div>
+
+                            <div class="mySlides fade">
+                                <div class="numbertext"></div>
+                                <img src="images/bg-ai2.jpg" style="width:100%">
+                                <div class="text"></div>
+                            </div>
+
+                            <div class="mySlides fade">
+                                <div class="numbertext"></div>
+                                <img src="images/logo.PNG" style="width:100%">
+                                <div class="text"></div>
+                            </div>
+
+                        </div>
+                        <br>
+
+                        <div style="text-align:center">
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+                            <span class="dot"></span>
+
+                        </div>
+
+                        <script>
+                            var slideIndex = 0;
+                            showSlides();
+
+                            function showSlides() {
+                                var i;
+                                var slides = document.getElementsByClassName("mySlides");
+                                var dots = document.getElementsByClassName("dot");
+                                for (i = 0; i < slides.length; i++) {
+                                    slides[i].style.display = "none";
+                                }
+                                slideIndex++;
+                                if (slideIndex > slides.length) {
+                                    slideIndex = 1
+                                }
+                                for (i = 0; i < dots.length; i++) {
+                                    dots[i].className = dots[i].className.replace(" active", "");
+                                }
+                                slides[slideIndex - 1].style.display = "block";
+                                dots[slideIndex - 1].className += " active";
+                                setTimeout(showSlides, 1500);
+                            }
+                        </script>
+
+                    </div>
+                </div>
+                <div class="col-right">
+                    <h1 class="section-title">What Is<span> AIA</span></h1>
+                    <h2>AIA Technologies</h2>
+
+
+                    <p> AIA is an artificial intelligence (AI) app that uses sentiment analysis (the use of natural language processing, computational linguistics, and biometrics to systematically classify, measure, and extract subjective knowledge) in order to make decisions and provide personalized experiences for users to construct complex and meaningful conversations.</p>
+                    <br>
+                    <p>Sentiment Analysis employs machine learning methods to determine how a person is feeling in order to make a more human-like conversation. Normally, sentiment analysis relies solely on text, but AIA incorporates data from the camera and microphone to make AIA more personalized for the user.</p>
+                    <br>
+
+                </div>
+            </div>
+            <div class="col-bottom">
+                <h1 class="section-title">How Does it Work<span></span></h1>
+                <br>
+                <br>
+
+
+                <p> Sentiment Analysis employs machine learning methods to determine how a person is feeling in order to make a more human-like conversation. Normally, sentiment analysis relies solely on text, but AIA incorporates data from the camera and microphone to make AIA more personalized for the user.</p>
+                <br>
+
+                <p>The app can be downloaded from the app store on your computer and can also be downloaded on our website www.aiatechnologies.ie.
+                    When first launched the app will be prompt the user to make a create an account.
+                    The user gives AIA a name to refer to them by and may also use a facial scan to improve the app's features. The user will also be asked to grant location access; this isn't needed, but it will improve the apps overall functionality.</p>
+
+            </div>
+
+        </section>
+
+        <!-- End About Section -->
+
+        <!--Footer Section-->
+        <footer id="main-footer">
+            <p>
+                ©
+                <a href="http://www.dcu.ie/" target="_blank">DCU 2021-2022</a>
+                <span>&middot;</span>
+                <span>These are students coursework</span>
+                <span>&middot;</span>
+                <span><a href="http://validator.w3.org/check?uri=referer" title="W3C HTML Validation Service">Valid HTML</a></span>
+            </p>
+        </footer>
+
+    </main>
+
+</body>
+
+</html>

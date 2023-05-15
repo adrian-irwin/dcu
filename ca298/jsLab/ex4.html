@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EX4</title>
+</head>
+<body>
+
+    <form id="form1">
+        <label for="number-one-input">First Number:</label>
+        <input type="text" name="number-one-input" id="num-one-input" placeholder="First number here">
+        <br>
+        <br>
+        <label for="number-two-input">Second Number</label>
+        <input type="text" name="number-two-input" id="num-two-input" placeholder="Second number here">
+        <br>
+        <br>
+        <button type="submit">Submit</button>
+    </form>
+
+    <script>
+
+        function add(x, y) {
+            return parseInt(x) + parseInt(y);
+        }
+
+        function formChecker(event) {
+            event.preventDefault();
+            let num1 = document.getElementById("num-one-input").value;
+            let num2 = document.getElementById("num-two-input").value;
+
+            if (num1 == "" || num2 == "") {
+                alert("Make sure both fields are filled in.")
+            } else if (isNaN(num1) || isNaN(num2)) {
+                alert("Both fields have to be numbers.")
+            } else {
+                let result = add(num1, num2);
+                let newElem = document.createElement("p");
+                newElem.innerHTML = num1 + " + " + num2 + " = " + result;
+                document.body.appendChild(newElem);
+            }
+        }
+
+        let form1 = document.getElementById("form1");
+        form1.addEventListener("submit", formChecker);
+    </script>
+</body>
+</html>

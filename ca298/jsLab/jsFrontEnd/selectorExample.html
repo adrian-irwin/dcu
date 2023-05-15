@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Selector Example</title>
+</head>
+<body>
+    <p>Paragraph 1</p>
+    <p>Paragraph 2</p>
+    <p class="myclass">Paragraph with class</p>
+    <p class="myclass">Paragraph 2 with class</p>
+    <p id="myparagraphid">Paragraph with id</p>
+
+    <button id="myButton">Click Me</button>
+    <p></p>
+
+    <form id="myForm">
+        <label for="form-username-input">Your Username</label>
+        <input type="text" name="form-username-input" id="name-input" placeholder="Your username here">
+        <label for="form-password-input">Your Password</label>
+        <input type="password" name="form-password-input" id="password-input" placeholder="Your password here">
+        <button type="submit">Submit</button>
+    </form>
+
+    <ul id="myList">
+    </ul>
+
+    <ol id="pokemon">
+    </ol>
+
+    <script>
+        // get all p tags
+        let allPTags = document.getElementsByTagName("p");
+        console.log(allPTags); // print all p tags
+
+        // get all tags with the class 'myclass'
+        let allPClassTags = document.getElementsByClassName("myclass");
+        console.log(allPClassTags); // print all tags with class 'myclass'
+
+        // get tag with specific id
+        let specificPTag = document.getElementById("myparagraphid");
+        console.log(specificPTag); // print specific tag
+        specificPTag.innerHTML = "Hello from js"; // change contents of the tag
+        specificPTag.style.color = "red"; // change colour of the tag
+
+        // create a function to create a pop up with text
+        function showAlert() {
+            alert("The button was pressed.")
+        }
+
+        // get tag with id 'myButton'
+        let mybutton = document.getElementById("myButton")
+        mybutton.addEventListener("click", showAlert) // on click of button run the function showalert
+
+        // function to check if username and password in a form are not blank
+        function formValidator(event) {
+            event.preventDefault();
+            let username = document.getElementById("name-input").value;
+            let password = document.getElementById("password-input").value;
+            if (username == "") {
+                alert("Username cannot be empty")
+            }
+            else if (password == "") {
+                alert("Password cannot be empty")
+            }
+            else {
+                alert("Form is valid")
+            }
+        }
+
+        let myform = document.getElementById("myForm")
+        myform.addEventListener("submit", formValidator)
+
+        // get a list with id myList
+        let list = document.getElementById("myList");
+        let names = ["John", "Paul", "George", "Ringo"] // create a list of names
+        for (let i = 0; i < names.length; i++) {
+            const name = names[i];
+            let nameElement = document.createElement("li") // create an element li
+            nameElement.innerHTML = name; // change the html of the element to a name
+            list.appendChild(nameElement); // add the element to the list
+        }
+
+        fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+        .then(response => response.json())
+        .then(allpokemon => console.log(allpokemon.results));
+
+        let pokemonList = document.getElementById("pokemon");
+        fetch('https://pokeapi.co/api/v2/pokemon?limit=151')
+        .then(response => response.json())
+        .then(allpokemon => console.log(allpokemon.results.forEach(element => {
+            let pokemonName = element.name;
+            let newListElement = document.createElement("li");
+            newListElement.innerHTML = pokemonName;
+            pokemonList.appendChild(newListElement);
+        })));
+
+
+    </script>
+</body>
+</html>

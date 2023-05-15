@@ -1,0 +1,5 @@
+1
+Reached end of try
+Exiting the function
+In exception handler
+Exiting the function

@@ -1,0 +1,362 @@
+/*GENERAL STYLING*/
+html,
+body {
+    margin: 0;
+}
+
+html {
+    font-size: 10px;
+    background-color: #fff;
+}
+
+body {
+    width: 100%;
+    min-width: 800px;
+    margin: 0 auto;
+
+}
+
+/*HEADER*/
+/*Header styled with flex and flex-flow which basically specifies the direction of a flex container, as well as its wrapping behavior and i want it to shrink*/
+header {
+    margin-bottom: 10px;
+}
+
+#header-style h1 {
+    color: #fff;
+}
+
+#header-style h2 {
+    color: #fff;
+}
+
+/*HEADER*/
+/*Im setting it to flex to allow it to shrink to fit the container*/
+nav {
+    height: 50px;
+    flex: 100%;
+    display: flex;
+    margin-bottom: 2%;
+}
+
+nav .current a {
+    color: #99ebff;
+    font-weight: bold;
+}
+
+nav a:hover {
+    color: #99ebff;
+
+}
+
+/*same with the header Im setting it to flex to allow it to shrink to fit the container and having no styling on my list*/
+nav ul {
+    padding: 0;
+    list-style-type: none;
+    flex: 2;
+    display: flex;
+}
+
+nav li {
+    display: inline;
+    text-align: center;
+    flex: 1;
+}
+
+nav a,
+nav span {
+    display: inline-block;
+    font-size: 2rem;
+    height: 3rem;
+    line-height: 1.7;
+    text-transform: uppercase;
+    text-decoration: none;
+    color: #ffffff;
+}
+
+/* SECTION A */
+/*Wraping the content around the box*/
+#showcase {
+    min-height: 450px;
+    color: #fff;
+    text-align: center;
+}
+
+#showcase .bg-image {
+    position: absolute;
+    background: url('../images/bg-ai-dark.jpg');
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
+    width: 100%;
+    height: 50%;
+    z-index: -1;
+}
+
+#showcase h1 {
+    padding-top: 100px;
+    padding-bottom: 0;
+    margin-top: 0;
+}
+
+#showcase .content-wrap,
+#section-a .content-wrap {
+
+    padding: 0 1.5em;
+    color: #ffffff;
+}
+
+/*Syling section a with color, padding and margin*/
+#section-a {
+    background: #8c8c8c;
+    color: #ffffff;
+    padding: 2em;
+    margin-bottom: 5%;
+    margin-top: 1.5%;
+}
+
+#section-a .section-a-text {
+    color: #ffffff;
+}
+
+/* PRICING PAGE SPECIFICS */
+.flex-1 {
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.flex-1 > div {
+    flex: 1 1 600px;
+    margin-bottom: 20px;
+    margin-right: 10px;
+    margin-left: 10px;
+    padding-top: 5px;
+    padding-left: 20px;
+    padding-right: 20px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.text-4 {
+    background-color: rgba(191, 191, 191, 1);
+    border-radius: 4px;
+}
+
+.text-4 p {
+    padding-left: 15%;
+    padding-right: 15%;
+}
+
+.timeframe {
+    margin: 1px;
+    padding: 1px;
+}
+
+.timeframe p {
+    margin: 1px;
+    padding: 1px;
+    text-align: center;
+    font-size: 4em;
+}
+
+.price {
+    margin: 20px;
+    padding: 1px;
+    font-size: 1.5em;
+    border-color: rgba(0, 0, 0, 0.24);
+    border-width: 2px;
+    border-style: solid;
+    border-radius: 4px;
+    background-color: rgba(159, 236, 255, 0.5);
+    cursor: pointer;
+}
+
+.price p {
+    margin: 1px;
+    padding: 1px;
+    font-size: 25px;
+    text-align: center;
+}
+
+.pricing-tables {
+    border-radius: 4px;
+    background-color: rgba(191, 191, 191, 1);
+}
+
+.feature-table {
+    border-collapse: collapse;
+    margin-left: auto;
+    margin-right: auto;
+    text-align: center;
+    font-size: 1.6rem;
+    width: 80%;
+    margin-bottom: 20px;
+    margin-top: 20px;
+}
+
+.feature-table th {
+    padding-top: 10px;
+    padding-bottom: 15px;
+    font-size: 2em;
+}
+
+.feature-table td {
+    width: 75%;
+    padding: 10px;
+}
+
+.feature-table tr {
+    border-top: 1px solid rgb(0, 0, 0);
+    border-bottom: 1px solid rgb(0, 0, 0);
+}
+
+.feature-table tr:first-child,
+.feature-table tr:first-child:hover {
+    border-top: none;
+    background-color: rgba(191, 191, 191, 1);
+}
+
+.feature-table tr:hover {
+    background-color: rgba(175, 213, 223, 1);
+}
+
+.content-1 h2 {
+    font-size: 5em;
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.tick {
+    font-size: 1.5em;
+}
+
+/*CONTACT DETAILS*/
+/*Setting font elements*/
+* {
+    font-family: 'Roboto', sans-serif;
+    font-weight: 200;
+}
+
+/*Adding styles to container class*/
+.container {
+    padding: 12px 18px 18px 18px;
+    margin: 48px 12px;
+    background: #bfbfbf;
+    border-radius: 4px;
+    width: 78%;
+    margin-left: 10%;
+}
+
+.container-nav {
+    padding: 12px 24px 24px 24px;
+    margin: 48px 12px;
+    background: #bfbfbf;
+    border-radius: 4px;
+    width: 65%;
+    margin-left: 16%;
+    margin-top: 4%;
+}
+
+/*Align items to center of the div with the class center*/
+.center {
+    text-align: center;
+}
+
+.content-1 {
+    padding: 12px 18px 18px 18px;
+    margin: 48px auto;
+    border-radius: 4px;
+    width: 78%;
+    background: #99ebff;
+    text-align: center
+}
+
+/* Add styles to the submit button*/
+input[type=submit] {
+    background: #64B5F6;
+    margin: 0 auto;
+    outline: 0;
+    color: white;
+    border: 0;
+    padding: 12px 24px;
+    border-radius: 4px;
+    position: relative;
+    display: inline-block;
+    text-align: center;
+}
+
+
+/*Adding styles to input and textarea selectors*/
+input[type=text],
+input[type=email],
+textarea {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    box-sizing: border-box;
+    margin-top: 6px;
+    margin-bottom: 16px;
+}
+
+/*COMMON TAGS*/
+h1,
+h2,
+h3,
+h4 {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #2a2a2a;
+}
+
+/*Adding styles to three tags to cut down times repeating myself*/
+p,
+input,
+li {
+    font-family: Arial, Helvetica, sans-serif;
+    color: #2a2a2a;
+}
+
+/*Basic tag styling*/
+
+h1 {
+    font-size: 4rem;
+    text-shadow: 2px 2px 10px black;
+    flex: 5;
+    text-transform: uppercase;
+}
+
+h2 {
+    font-size: 3rem;
+    text-align: center;
+}
+
+h3 {
+    font-size: 2.4rem;
+    text-align: center;
+}
+
+h4 {
+    font-size: 2.0rem;
+    color: white;
+    text-shadow: 1px 1px black;
+}
+
+p,
+li {
+    font-size: 1.6rem;
+    line-height: 1.5;
+}
+
+
+/*FOOTER*/
+#main-footer {
+    padding: 2em;
+    background: #595959;
+    color: #ffffff;
+    text-align: center;
+}
+
+#main-footer {
+    color: #ffffff;
+    text-decoration: none;
+}

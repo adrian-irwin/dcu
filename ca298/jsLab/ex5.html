@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>EX5</title>
+</head>
+<body>
+
+    <h1>yo</h1>
+
+
+    <script>
+        let yo = fetch("https://swapi.dev/api/planets/1")
+        .then(response => response.json())
+        .then(planet => console.log("Planet Name = " + planet.name
+                                + "\nPlanet Diameter = " + planet.diameter
+                                + "\nPlanet Climate = " + planet.climate
+                                + "\nPlanet Population = " + planet.population
+                                + "\nPlanet Terrain = " + planet.terrain))
+
+    </script>
+</body>
+</html>

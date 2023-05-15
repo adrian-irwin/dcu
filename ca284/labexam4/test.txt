@@ -1,0 +1,5 @@
+n number of inputs = attendance records for n students
+attendance can be 'P' present,'L' late or 'A' absent
+if a student has 3 or more absences then their status is set to 1
+if a student has 3 lates in a row thne their status is set to 1
+otherwise it will stay at 0

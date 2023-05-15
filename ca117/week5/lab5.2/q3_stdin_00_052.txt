@@ -1,0 +1,8 @@
+giraffes 12
+seals 9
+snakes 20
+aardvarks 6
+kangaroos 22
+penguins 17
+adrian 15
+dsafas 1

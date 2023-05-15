@@ -1,3 +1,6 @@
+// Group Practical
+// Authors: Adrian Irwin, Ciarán Skelly
+// Link: https://ancientbrain.com/world.php?world=6686461747
 
 AB.maxSteps = 1000000;
 AB.drawRunControls = false;

@@ -504,3 +504,4 @@ hs_err_pid*
 replay_pid*
 
 *.pl~
+!shakespeare.zip

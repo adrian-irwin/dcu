@@ -1,0 +1,114 @@
+<%- include('header', {title : 'Order History'}) -%>
+
+<div class="container-lg p-3">
+
+    <div id="not-logged-in">
+        <h1>You are not logged in</h1>
+        <p>You need to be logged in to view your previous orders.</p>
+        <p>You will be redirected to the login page.</p>
+    </div>
+
+    <div id="empty">
+        <h1>You have no previous orders.</h1>
+    </div>
+
+    <div id="not-empty">
+        <h1>Order History</h1>
+        <table id="order-items" class="table table-striped">
+            <thead>
+                <tr>
+                    <th scope="col">Order ID</th>
+                    <th scope="col">Order Date</th>
+                    <th scope="col">Shipping To</th>
+                    <th scope="col">Total Price</th>
+                </tr>
+            </thead>
+            <tbody id="order-items-body">
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td id="total-orders-count"></td>
+                    <td colspan="2"></td>
+                    <td id="total-order-price"></td>
+                </tr>
+            </tfoot>
+    </div>
+
+</div>
+
+<script>
+    let empty = document.getElementById("empty");
+    let notEmpty = document.getElementById("not-empty");
+    let notLoggedIn = document.getElementById("not-logged-in");
+    let orderItems = document.getElementById("order-items-body");
+    let accessToken = localStorage.getItem("access");
+    let totalOrders = 0;
+    let totalOrderPrice = 0;
+
+    function getOrders() {
+        if (accessToken == "" || accessToken == null) {
+            empty.remove();
+            notEmpty.remove();
+            document.getElementById("auth-basket").remove();
+            setTimeout(() => {
+                window.location.href = "/login"
+            }, 5000);
+        }
+        else if (accessToken != "" && accessToken != null) {
+            fetch("http://127.0.0.1:8000/api/orders/", {
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + accessToken
+                }
+            }).then(response => response.json())
+            .then(data => {
+                notLoggedIn.remove();
+                console.log(data);
+                if (data.length == 0) notEmpty.remove();
+                else {
+                    console.log("test")
+                    empty.remove();
+                    data.forEach(element => {
+                        let order = document.createElement("tr");
+                        order.classList.add("order-item");
+
+                        let orderId = document.createElement("td");
+                        orderId.innerHTML = element["id"];
+
+                        let orderDate = document.createElement("td");
+                        let date = new Date(element["date_ordered"]);
+                        orderDate.innerHTML = date.toUTCString();
+
+                        let shippingTo = document.createElement("td");
+                        shippingTo.innerHTML = element["shipping_address"];
+
+                        let totalPrice = document.createElement("td");
+                        totalPrice.innerHTML = "€" + element["total_price"];
+
+                        order.appendChild(orderId);
+                        order.appendChild(orderDate);
+                        order.appendChild(shippingTo);
+                        order.appendChild(totalPrice);
+
+                        orderItems.appendChild(order);
+
+                        totalOrders += 1;
+                        totalOrderPrice += parseFloat(element["total_price"]);
+
+                    })
+                    let totalPriceItem = document.getElementById("total-order-price");
+                    totalPriceItem.innerHTML = "€" + totalOrderPrice.toFixed(2);
+
+                    let totalOrdersItem = document.getElementById("total-orders-count");
+                    totalOrdersItem.innerHTML = "Total Orders: " + totalOrders;
+                }
+            })
+        }
+    }
+
+    getOrders();
+</script>
+
+<%- include('footer') -%>

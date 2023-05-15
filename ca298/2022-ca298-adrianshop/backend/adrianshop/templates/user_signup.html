@@ -1,0 +1,11 @@
+{% extends 'base.html' %}
+
+{% block title %} User Signup {% endblock %}
+
+{% block content %}
+    <form action="." method="POST">
+        {% csrf_token %}
+        <table class="table">{{ form.as_table }}</table>
+        <button type="submit" class="btn btn-primary btn-lg">Submit</button>
+    </form>
+{% endblock %}

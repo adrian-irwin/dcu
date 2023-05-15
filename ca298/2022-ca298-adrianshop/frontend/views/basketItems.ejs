@@ -1,0 +1,188 @@
+<div id="main" class="container-lg p-3">
+
+</div>
+
+<script>
+
+    let mainDiv = document.getElementById("main");
+    let accessToken = localStorage.getItem("access");
+    let totalPrice = 0;
+    let totalQuantity = 0;
+
+    function removeProduct(productId) {
+        url = "http://127.0.0.1:8000/apiremove/";
+        fetch(url, {
+            method: "POST",
+            headers: {
+                "Content-Type": "application/json",
+                "Authorization": "Bearer " + accessToken
+            },
+            body: JSON.stringify({
+                "product_id": productId
+            })
+        })
+
+        window.location.reload();
+    }
+
+    function getBasket() {
+
+        if (accessToken == "" || accessToken == null) {
+            mainDiv.className += " text-center";
+
+            let heading = document.createElement("h1");
+            let info = document.createElement("div");
+
+            heading.innerHTML = "You are not logged in!";
+            info.innerHTML += "<p>You need to be logged in to view your basket.</p>";
+            info.innerHTML += "<p>You will be redirected to the login page.</p>";
+
+            mainDiv.appendChild(heading);
+            mainDiv.appendChild(info);
+
+            setTimeout(() => {
+                window.location.href = "/login"
+            }, 2000);
+        }
+        else if (accessToken != "" && accessToken != null) {
+            fetch("http://127.0.0.1:8000/api/basket/",{
+                method: "GET",
+                headers: {
+                    "Accept": "application/json",
+                    "Content-Type": "application/json",
+                    "Authorization": "Bearer " + accessToken
+                }
+            })
+            .then(response => response.json())
+            .then(data => {
+                if (data[0]["items"].length == 0) {
+                    mainDiv.className += " text-center";
+
+                    let heading = document.createElement("h1");
+                    let info = document.createElement("div");
+
+                    heading.innerHTML = "Your basket is empty!";
+                    info.innerHTML += "<p>You have no items in your basket.</p>";
+
+                    mainDiv.appendChild(heading);
+                    mainDiv.appendChild(info);
+                }
+                else {
+                    let basketItems = document.createElement("table");
+                    let basketItemHead = document.createElement("thead");
+                    let basketItemsBody = document.createElement("tbody");
+                    let basketItemFoot = document.createElement("tfoot");
+
+
+                    basketItems.className = "table table-striped align-middle";
+                    basketItems.id = "basket-items";
+
+                    let basketItemsHeadRow = document.createElement("tr");
+                    let basketItemsHeadName = document.createElement("th");
+                    let basketItemsHeadImage = document.createElement("th");
+                    let basketItemsHeadQuantity = document.createElement("th");
+                    let basketItemsHeadPrice = document.createElement("th");
+
+                    basketItemsHeadName.innerHTML = "Name";
+                    basketItemsHeadImage.innerHTML = "Image";
+                    basketItemsHeadQuantity.innerHTML = "Quantity";
+                    basketItemsHeadPrice.innerHTML = "Price";
+
+                    basketItemsHeadRow.appendChild(basketItemsHeadName);
+                    basketItemsHeadRow.appendChild(basketItemsHeadImage);
+                    basketItemsHeadRow.appendChild(basketItemsHeadQuantity);
+                    basketItemsHeadRow.appendChild(basketItemsHeadPrice);
+
+                    basketItemHead.appendChild(basketItemsHeadRow);
+
+                    basketItemsBody.id = "basket-items-body";
+
+                    data[0]["items"].forEach(element => {
+                        let itemURL = new URL(element["product_id"]);
+                        let productId = itemURL.pathname.split("/")[3];
+
+                        let basketItemRow = document.createElement("tr");
+                        let basketItemName = document.createElement("th");
+                        let basketItemOuterImage = document.createElement("td");
+                        let basketItemImage = document.createElement("img");
+                        let basketItemQuantity = document.createElement("td");
+                        let basketItemPrice = document.createElement("td");
+                        let basketItemRemove = document.createElement("td");
+                        let basketItemRemoveButton = document.createElement("a");
+
+                        basketItemRow.className = "basket-item";
+
+                        basketItemName.className = "basket-item-name";
+                        basketItemName.innerHTML = element["product_name"];
+
+                        basketItemOuterImage.className = "basket-item-image";
+                        basketItemImage.style.width = "100px";
+                        fetch(element["product_id"])
+                        .then(response => response.json())
+                        .then(data => {
+                            basketItemImage.src = data["product_image"];
+                        })
+
+                        basketItemOuterImage.appendChild(basketItemImage);
+
+                        basketItemQuantity.className = "basket-item-quantity";
+                        basketItemQuantity.innerHTML = element["quantity"];
+
+                        basketItemPrice.className = "basket-item-price";
+                        basketItemPrice.innerHTML = "€" + element["item_price"].toFixed(2);
+
+                        basketItemRemove.className = "basket-item-remove";
+                        basketItemRemoveButton.className = "btn btn-danger";
+                        basketItemRemoveButton.innerHTML = "Remove";
+                        basketItemRemoveButton.addEventListener("click", () => {
+                            removeProduct(productId);
+                        });
+
+                        basketItemRemove.appendChild(basketItemRemoveButton);
+
+                        basketItemRow.appendChild(basketItemName);
+                        basketItemRow.appendChild(basketItemOuterImage);
+                        basketItemRow.appendChild(basketItemQuantity);
+                        basketItemRow.appendChild(basketItemPrice);
+                        basketItemRow.appendChild(basketItemRemove);
+
+                        basketItemsBody.appendChild(basketItemRow);
+
+                        totalPrice += element["item_price"];
+                        totalQuantity += element["quantity"];
+                    })
+
+                    basketItemFoot.id = "basket-items-foot";
+
+                    let basketItemFootRow = document.createElement("tr");
+                    let basketItemFootTotal = document.createElement("th");
+                    let basketItemFootTotalQuantity = document.createElement("td");
+                    let basketItemFootTotalPrice = document.createElement("td");
+
+                    basketItemFootTotal.innerHTML = "Total";
+                    basketItemFootTotal.colSpan = "2";
+
+                    basketItemFootTotalQuantity.innerHTML = totalQuantity + " items";
+                    basketItemFootTotalQuantity.colSpan = "1";
+
+                    basketItemFootTotalPrice.innerHTML = "€" + totalPrice.toFixed(2);
+                    basketItemFootTotalPrice.colSpan = "2";
+
+                    basketItemFootRow.appendChild(basketItemFootTotal);
+                    basketItemFootRow.appendChild(basketItemFootTotalQuantity);
+                    basketItemFootRow.appendChild(basketItemFootTotalPrice);
+
+                    basketItemFoot.appendChild(basketItemFootRow);
+
+                    basketItems.appendChild(basketItemHead);
+                    basketItems.appendChild(basketItemsBody);
+                    basketItems.appendChild(basketItemFoot);
+
+                    mainDiv.appendChild(basketItems);
+                }
+            })
+
+        }
+    }
+
+</script>

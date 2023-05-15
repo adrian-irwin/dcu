@@ -1,0 +1,18 @@
+{% extends 'base.html' %}
+
+{% block title %} {{ tag }} {% endblock %}
+
+{% block content %}
+    <h1 class="text-center">{{ tag }}</h1>
+    <div class="d-flex flex-wrap p-2 justify-content-center " >
+        {% for p in products %}
+            <div class="flex-grow-1 text-center border border-primary rounded p-4 m-1" onclick="location.href='/products/{{p.id}}';" style="cursor: pointer;">
+                <p>{{p.name}} - €{{p.price}}</p>
+                <p>{{ p.description }}</p>
+                    <img src="{{p.product_image.url}}" style="height: 100px;">
+
+            </div>
+        {% endfor %}
+        </div>
+
+{% endblock %}

@@ -1,0 +1,47 @@
+
+<nav class="navbar navbar-expand-sm navbar-dark bg-dark">
+    <div class="container-fluid">
+        <a class="navbar-brand" href="{% url 'index' %}">Clothes Shop</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse" id="navbarNav">
+            <ul class="navbar-nav nav-pills mx-lg-auto">
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'all_products' %} active {% endif %} " aria-current="page" href="{% url 'all_products' %}">All Products</a>
+                </li>
+                <li class="nav-item dropdown">
+                    <a class="nav-link dropdown-toggle {% if request.resolver_match.url_name == 'tag_page' %} active {% endif %}" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                        Categories
+                    </a>
+                    <ul class="dropdown-menu" aria-labelledby="navbarDropdown">
+                        <li><a class="dropdown-item" href="{% url 'tag_page' 'Hats' %}">Hats</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tag_page' 'Shirts' %}">Shirts</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tag_page' 'Hoodies' %}">Hoodies</a></li>
+                        <li><a class="dropdown-item" href="{% url 'tag_page' 'Trousers' %}">Trousers</a></li>
+                    </ul>
+                </li>
+            </ul>
+            <ul class="navbar-nav nav-pills ">
+                {% if user.is_authenticated %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'show_basket' %} active {% endif %}" href="{% url 'show_basket' %}">Basket</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'order_history' %} active {% endif %}" href="{% url 'order_history' %}">Order History</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                </li>
+                {% else %}
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'register' %} active {% endif %}" href="{% url 'register' %}">Register</a>
+                </li>
+                <li class="nav-item">
+                    <a class="nav-link {% if request.resolver_match.url_name == 'login' %} active {% endif %}" href="{% url 'login' %}">Login</a>
+                </li>
+                {% endif %}
+            </ul>
+        </div>
+    </div>
+</nav>

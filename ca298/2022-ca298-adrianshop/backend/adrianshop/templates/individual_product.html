@@ -1,0 +1,24 @@
+{% extends 'base.html' %}
+
+{% block title %} {{product.name}} {% endblock %}
+
+{% block content %}
+
+{% if added == True %}
+<div class="text-center mb-3">
+    <p class="h2 p-4 text-success">Added to Basket</p>
+    <a href="{% url 'show_basket' %}" class="p-3 btn btn-primary btn-lg">
+        View Shopping Basket
+    </a>
+</div>
+
+{% endif %}
+<div class="text-center p-2">
+    <h1>{{product.name}}</h1>
+    <h3>€{{product.price}}</h3>
+    <p>{{product.description}}<br>Category: {{ product.product_tag }}</p>
+    <a href="{% url 'individual_product' product.id %}"><img src="{{product.product_image.url}}" style="width: 200px;" class="mb-3"></a>
+    <p><a href="{% url 'add_to_basket' product.id %}" class="btn btn-primary">Add to Basket</a></p>
+</div>
+
+{% endblock %}

@@ -1,0 +1,95 @@
+<%- include("header", {title : "Registration"})-%>
+
+    <div class="container-lg p-3">
+
+        <h1 class="text-center pb-4">Register</h1>
+
+        <form id="register-form">
+
+            <div class="mb-4 form-floating">
+                <input type="email" class="form-control form-control-lg" name="email-input" id="email" placeholder="Your email" aria-describedby="email-help" required autofocus>
+                <label for="email-input" class="form-label">Email</label>
+                <div class="form-text" id="email-help">
+                    An email is required and can only contain letters, digits and @/./+/-/_ characters.
+                </div>
+            </div>
+
+            <div class="mb-4 form-floating">
+                <input type="text" class="form-control form-control-lg" name="username-input" id="username" placeholder="Your username" aria-describedby="username-help" required>
+                <label for="username-input" class="form-label">Username</label>
+                <div class="form-text" id="username-help">
+                    A user name is required.
+                </div>
+            </div>
+
+            <div class="mb-4 form-floating">
+                <input type="password" class="form-control form-control-lg" name="password-input" id="password" placeholder="Your password" aria-describedby="password-help" required>
+                <label for="password-input" class="form-label">Password</label>
+                <div class="form-text" id="password-help">
+                    A password is required and must have at least 8 characters.
+                </div>
+            </div>
+
+            <button type="submit" class="btn btn-lg btn-primary">Register</button>
+
+        </form>
+
+    </div>
+
+    <script>
+        function formValidate(event) {
+            event.preventDefault();
+            let email = document.getElementById("email").value;
+            let username = document.getElementById("username").value;
+            let password = document.getElementById("password").value;
+
+            console.log("password length: " + password.length);
+            if (email == "") {
+                alert("Email cannot be empty.")
+            }
+            else if (username == "") {
+                alert("Username cannot be empty.")
+            }
+            else if (password == "") {
+                alert("Password cannot be empty.")
+            }
+            else if (password.length < 8) {
+                alert("Password must be at least 8 characters long.");
+            }
+            else {
+                fetch("http://127.0.0.1:8000/apiregister/", {
+                    method: "POST",
+                    headers: {
+                        "Accept": "application/json",
+                        "Content-Type": "application/json"
+                    },
+                    body: JSON.stringify({
+                        "username": username,
+                        "password": password,
+                        "email" : email
+                    })
+                }).then(response => response.json())
+                .then(data => {
+                    // console.log("email: " + email);
+                    // console.log("username: " + username);
+                    console.log("password length: " + password.length);
+                    console.log(data)
+                    if (data.email == "Enter a valid email address.") {
+                        alert("Email invalid.\nMake sure you have an @ and a proper suffix in your email.")
+                    }
+                    else if (data.username == "A user with that username already exists.") {
+                        alert("Username already exists.\nChoose a different username.")
+                    }
+                    else if ("email" in data && "username" in data) {
+                        console.log("Registration successful.");
+                        window.location.href = "/login";
+                    }
+                })
+            }
+        }
+
+        let registerForm = document.getElementById("register-form");
+        registerForm.addEventListener("submit", formValidate);
+
+    </script>
+<%- include('footer') -%>

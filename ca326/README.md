@@ -1,4 +1,4 @@
-# Carpool2DCU 
+# CA326 - Year 3 Project - Carpool2DCU 
 
 Carpool2DCU is a mobile carpooling application that is operational on both Android and IOS devices. It aims at getting DCU students to campus while reducing their digital footprint, as well as decreasing transportation costs throughout the university. The application was developed with ease of use in mind as well as respect for individual constraints, which is why students can filter their ideal partner out of available ones.
 
